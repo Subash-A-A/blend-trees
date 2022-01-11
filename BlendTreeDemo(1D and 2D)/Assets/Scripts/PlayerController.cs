@@ -6,8 +6,10 @@ public class PlayerController : MonoBehaviour
 {
     Animator animator;
     float velocity = 0.0f;
-    float acceleration = 0.5f;
+    float acceleration = 3f;
+    float deceleration = 1f;
     int VelocityHash;
+    float running = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -19,17 +21,27 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float forwardPressed = Input.GetAxisRaw("Vertical");
+        bool isRunning = Input.GetKey("left shift");
+        float vertical = Input.GetAxisRaw("Vertical");
 
-        if (forwardPressed > 0 && velocity <= 1)
+        if(isRunning && running <= 2f)
+        {
+            running += Time.deltaTime * acceleration;
+        }
+        else if(!isRunning && running >= 1f)
+        {
+            running -= Time.deltaTime * deceleration;
+        }
+
+        if (vertical > 0 && velocity <= 0.5)
         {
             velocity += Time.deltaTime * acceleration;
         }
-        else if(forwardPressed <= 0 && velocity >= 0)
+        else if(vertical <= 0 && velocity >= 0)
         {
-            velocity -= Time.deltaTime * acceleration;
+            velocity -= Time.deltaTime * deceleration;
         }
-        animator.SetFloat(VelocityHash, velocity);
+        animator.SetFloat(VelocityHash, velocity * running);
 
     }
 }
