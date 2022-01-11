@@ -5,7 +5,8 @@ public class PlayerController2D : MonoBehaviour
     Animator animator;
     float velX = 0.0f;
     float velZ = 0.0f;
-    float acceleration = 10f;
+    float acceleration = 5f;
+    float deceleration = 3f;
     float running = 1f;
 
     // Start is called before the first frame update
@@ -28,7 +29,7 @@ public class PlayerController2D : MonoBehaviour
         }
         else if(!isRunning && running >= 1)
         {
-            running -= Time.deltaTime * acceleration;
+            running -= Time.deltaTime * deceleration;
         }
 
         if(horizontal > 0 && velX <= 1)
@@ -43,11 +44,11 @@ public class PlayerController2D : MonoBehaviour
         {
             if(velX >= 0)
             {
-                velX -= Time.deltaTime * acceleration;
+                velX -= Time.deltaTime * deceleration;
             }
             if(velX <= 0)
             {
-                velX += Time.deltaTime * acceleration;
+                velX += Time.deltaTime * deceleration;
             }
         }
 
@@ -57,7 +58,7 @@ public class PlayerController2D : MonoBehaviour
         }
         if(vertical <= 0 && velZ >= 0)
         {
-            velZ -= Time.deltaTime * acceleration;
+            velZ -= Time.deltaTime * deceleration;
         }
 
 
